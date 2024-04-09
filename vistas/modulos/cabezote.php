@@ -8,7 +8,7 @@
 		<!-- logo mini -->
 		<span class="logo-mini">
 			
-			<img src="vistas/img/plantilla/icono-blanco.png" class="img-responsive" style="padding:10px">
+			<img src="vistas/img/plantilla/icono-blanco.png" class="img-responsive" style="margin-top: 13px">
 
 		</span>
 
