@@ -32,126 +32,85 @@ class ControladorProductos{
 		   		/*=============================================
 				VALIDAR IMAGEN
 				=============================================*/
+				$ruta = "vistas/img/productos/default/anonymous.png";
 
-			   	$ruta = "vistas/img/productos/default/anonymous.png";
-
-			   	if(isset($_FILES["nuevaImagen"]["tmp_name"])){
-
+				if(isset($_FILES["nuevaImagen"]["tmp_name"]) && !empty($_FILES["nuevaImagen"]["tmp_name"])) {
 					list($ancho, $alto) = getimagesize($_FILES["nuevaImagen"]["tmp_name"]);
-
 					$nuevoAncho = 500;
 					$nuevoAlto = 500;
-
-					/*=============================================
-					CREAMOS EL DIRECTORIO DONDE VAMOS A GUARDAR LA FOTO DEL USUARIO
-					=============================================*/
-
+				
+					// Crear el directorio donde se guardará la imagen
 					$directorio = "vistas/img/productos/".$_POST["nuevoCodigo"];
-
 					mkdir($directorio, 0755);
-
-					/*=============================================
-					DE ACUERDO AL TIPO DE IMAGEN APLICAMOS LAS FUNCIONES POR DEFECTO DE PHP
-					=============================================*/
-
-					if($_FILES["nuevaImagen"]["type"] == "image/jpeg"){
-
-						/*=============================================
-						GUARDAMOS LA IMAGEN EN EL DIRECTORIO
-						=============================================*/
-
+				
+					// Determinar el tipo de imagen y guardarla en el directorio
+					if($_FILES["nuevaImagen"]["type"] == "image/jpeg") {
 						$aleatorio = mt_rand(100,999);
-
 						$ruta = "vistas/img/productos/".$_POST["nuevoCodigo"]."/".$aleatorio.".jpg";
-
-						$origen = imagecreatefromjpeg($_FILES["nuevaImagen"]["tmp_name"]);						
-
-						$destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
-
-						imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
-
-						imagejpeg($destino, $ruta);
-
-					}
-
-					if($_FILES["nuevaImagen"]["type"] == "image/png"){
-
-						/*=============================================
-						GUARDAMOS LA IMAGEN EN EL DIRECTORIO
-						=============================================*/
-
+						$origen = imagecreatefromjpeg($_FILES["nuevaImagen"]["tmp_name"]);
+					} elseif($_FILES["nuevaImagen"]["type"] == "image/png") {
 						$aleatorio = mt_rand(100,999);
-
 						$ruta = "vistas/img/productos/".$_POST["nuevoCodigo"]."/".$aleatorio.".png";
-
-						$origen = imagecreatefrompng($_FILES["nuevaImagen"]["tmp_name"]);						
-
-						$destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
-
-						imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
-
-						imagepng($destino, $ruta);
-
+						$origen = imagecreatefrompng($_FILES["nuevaImagen"]["tmp_name"]);
 					}
-
+				
+					// Redimensionar y guardar la imagen
+					if(isset($origen)) {
+						$destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
+						imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
+						if($_FILES["nuevaImagen"]["type"] == "image/jpeg") {
+							imagejpeg($destino, $ruta);
+						} elseif($_FILES["nuevaImagen"]["type"] == "image/png") {
+							imagepng($destino, $ruta);
+						}
+					}
 				}
-
+				
 				$tabla = "productos";
-
-				$datos = array("id_categoria" => $_POST["nuevaCategoria"],
-							   "codigo" => $_POST["nuevoCodigo"],
-							   "descripcion" => $_POST["nuevaDescripcion"],
-							   "stock" => $_POST["nuevoStock"],
-							   "precio_compra" => $_POST["nuevoPrecioCompra"],
-							   "precio_venta" => $_POST["nuevoPrecioVenta"],
-							   "imagen" => $ruta);
-
+				
+				$datos = array(
+					"id_categoria" => $_POST["nuevaCategoria"],
+					"codigo" => $_POST["nuevoCodigo"],
+					"descripcion" => $_POST["nuevaDescripcion"],
+					"stock" => $_POST["nuevoStock"],
+					"precio_compra" => $_POST["nuevoPrecioCompra"],
+					"precio_venta" => $_POST["nuevoPrecioVenta"],
+					"imagen" => $ruta
+				);
+				
 				$respuesta = ModeloProductos::mdlIngresarProducto($tabla, $datos);
-
-				if($respuesta == "ok"){
-
-					echo'<script>
-
+				
+				if($respuesta == "ok") {
+					echo '<script>
 						swal({
-							  type: "success",
-							  title: "El producto ha sido guardado correctamente",
-							  showConfirmButton: true,
-							  confirmButtonText: "Cerrar"
-							  }).then(function(result){
-										if (result.value) {
-
-										window.location = "productos";
-
-										}
-									})
-
-						</script>';
-
-				}
-
-
-			}else{
-
-				echo'<script>
-
-					swal({
-						  type: "error",
-						  title: "¡El producto no puede ir con los campos vacíos o llevar caracteres especiales!",
-						  showConfirmButton: true,
-						  confirmButtonText: "Cerrar"
-						  }).then(function(result){
+							type: "success",
+							title: "El producto ha sido guardado correctamente",
+							showConfirmButton: true,
+							confirmButtonText: "Cerrar"
+						}).then(function(result) {
 							if (result.value) {
-
-							window.location = "productos";
-
+								window.location = "productos";
 							}
-						})
-
-			  	</script>';
+						});
+					</script>';
+				} else {
+					echo '<script>
+						swal({
+							type: "error",
+							title: "¡El producto no puede ir con los campos vacíos o llevar caracteres especiales!",
+							showConfirmButton: true,
+							confirmButtonText: "Cerrar"
+						}).then(function(result) {
+							if (result.value) {
+								window.location = "productos";
+							}
+						});
+					</script>';
+				}
 			}
 		}
-
 	}
+				
 
 	/*=============================================
 	EDITAR PRODUCTO
@@ -362,3 +321,5 @@ class ControladorProductos{
 
 
 }
+
+/*E:\xampp\htdocs\pos2\extensiones*/
