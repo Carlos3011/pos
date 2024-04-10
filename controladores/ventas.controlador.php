@@ -145,7 +145,7 @@ class ControladorVentas{
 				PRIMERA PRUEBA DEFINITIVA DE IMPRESION
 				=============================================*/	
 
-				$impresora = "xp-58IIH";
+				/*$impresora = "xp-58IIH";
 
 				$conector = new WindowsPrintConnector($impresora);
 
@@ -155,7 +155,7 @@ class ControladorVentas{
 
 				$printer -> text(date("Y-m-d H:i:s")."\n");//Fecha de la factura
 
-				$printer -> feed(1); //Alimentamos el papel 1 vez*/
+				$printer -> feed(1); //Alimentamos el papel 1 vez
 
 				$printer -> text("Accesorios Led El Güero"."\n");//Nombre de la empresa
 
@@ -165,7 +165,7 @@ class ControladorVentas{
 
 				$printer -> text("FACTURA N.".$_POST["nuevaVenta"]."\n");//Número de factura
 
-				$printer -> feed(1); //Alimentamos el papel 1 vez*/
+				$printer -> feed(1); //Alimentamos el papel 1 vez
 
 				$printer -> text("Cliente: ".$traerCliente["nombre"]."\n");//Nombre del cliente
 
@@ -177,7 +177,7 @@ class ControladorVentas{
 
 				$printer -> text("Vendedor: ".$traerVendedor["nombre"]."\n");//Nombre del vendedor
 
-				$printer -> feed(1); //Alimentamos el papel 1 vez*/
+				$printer -> feed(1); //Alimentamos el papel 1 vez
 
 				foreach ($listaProductos as $key => $value) {
 
@@ -191,7 +191,7 @@ class ControladorVentas{
 
 				}
 
-				$printer -> feed(1); //Alimentamos el papel 1 vez*/			
+				$printer -> feed(1); //Alimentamos el papel 1 vez		
 				
 				$printer->text("NETO: $ ".number_format($_POST["nuevoPrecioNeto"],2)."\n"); //ahora va el neto
 
@@ -201,11 +201,11 @@ class ControladorVentas{
 
 				$printer->text("TOTAL: $ ".number_format($_POST["totalVenta"],2)."\n"); //ahora va el total
 
-				$printer -> feed(1); //Alimentamos el papel 1 vez*/	
+				$printer -> feed(1); //Alimentamos el papel 1 vez
 
 				$printer->text("Muchas gracias por su compra"); //Podemos poner también un pie de página
 
-				$printer -> feed(3); //Alimentamos el papel 3 veces*/
+				$printer -> feed(3); //Alimentamos el papel 3 veces
 
 				$printer -> cut(); //Cortamos el papel, si la impresora tiene la opción
 
@@ -215,7 +215,7 @@ class ControladorVentas{
 
 				$imprimir -> cut();
 
-				$imprimir -> close();
+				$imprimir -> close();*/
 
 				echo'<script>
 
