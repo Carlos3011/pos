@@ -52,6 +52,8 @@ $('.tablaProductos').DataTable( {
 /*=============================================
 CAPTURANDO LA CATEGORIA PARA ASIGNAR CÓDIGO
 =============================================*/
+
+/*COMENTAR ESTA PARTE DEL CODIGO CUANDO SE USE LECTOR DE CODIGO*/
 $("#nuevaCategoria").change(function(){
 
 	var idCategoria = $(this).val();
